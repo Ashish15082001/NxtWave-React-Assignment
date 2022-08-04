@@ -8,19 +8,26 @@
   margin-bottom: 3.2rem;
   display: grid;
   grid-template-columns: repeat(3, 36rem);
+  grid-template-rows: min-content;
   grid-auto-rows: 19.2rem;
   margin-inline: auto;
   width: fit-content;
   list-style: none;
   gap: 3.2rem;
-  grid-template-rows: min-content;
 }
 
 /* .resource-list-item {
 
 } */
 
-h1 {
-  color: red;
-  font-size: 5rem;
+@media only screen and (max-width: 1200px) {
+  .resource-list {
+    grid-template-columns: repeat(2, 36rem);
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .resource-list {
+    grid-template-columns: repeat(1, 36rem);
+  }
 }

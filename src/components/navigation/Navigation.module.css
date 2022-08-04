@@ -29,3 +29,9 @@
   background-color: var(--color-blue);
   color: white;
 }
+
+@media only screen and (max-width: 800px) {
+  .navigation-list-item {
+    width: 11.9rem;
+  }
+}

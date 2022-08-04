@@ -32,3 +32,17 @@
 .input::placeholder {
   color: var(--color-font-placeholder);
 }
+
+@media only screen and (max-width: 1200px) {
+  .input-container {
+    grid-column-end: 3;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .input-container {
+    grid-column-end: 2;
+    width: 100%;
+  }
+}
