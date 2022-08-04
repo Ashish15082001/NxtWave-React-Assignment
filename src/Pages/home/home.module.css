@@ -1,6 +1,22 @@
-.home-body {
+/* .home-body {
   border: 1px solid blue;
+} */
+
+.resource-list {
+  /* border: 1px solid red; */
+  margin-top: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 36rem);
+  grid-auto-rows: 19.2rem;
+  margin-inline: auto;
+  width: fit-content;
+  list-style: none;
+  gap: 3.2rem;
 }
+
+/* .resource-list-item {
+
+} */
 
 h1 {
   color: red;
