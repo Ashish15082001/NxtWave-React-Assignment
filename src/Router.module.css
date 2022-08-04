@@ -1,0 +1,6 @@
+.page-body {
+  min-height: 100vh;
+  background-color: var(--color-light-grey);
+  display: grid;
+  grid-template-rows: 7.2rem 1fr;
+}
