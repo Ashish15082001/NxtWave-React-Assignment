@@ -14,8 +14,6 @@ export function Navigation({ navigationList }) {
   const searchParams =
     location.search === "" ? "resources" : location.search.split("=")[1];
 
-  console.log(searchParams);
-
   return (
     <nav className={NavigationStyles[NAVIGATION_BODY]}>
       <ul className={NavigationStyles[NAVIGATION_LIST]}>

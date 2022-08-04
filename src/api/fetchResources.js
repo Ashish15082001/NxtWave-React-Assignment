@@ -4,7 +4,7 @@ export async function fetchResources() {
       "https://media-content.ccbp.in/website/react-assignment/resources.json"
     );
 
-    console.log(response);
+    // console.log(response);
     const responseData = await response.json();
     return responseData;
   } catch (error) {}

@@ -7,7 +7,6 @@ export function Router() {
   return (
     <div className={RouterStyles["page-body"]}>
       <Header />
-
       <Routes>
         <Route
           path="/"
