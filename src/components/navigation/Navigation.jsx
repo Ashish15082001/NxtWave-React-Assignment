@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import NavigationStyles from "./Navigation.module.css";
-
-const NAVIGATION_BODY = "navigation-body";
-const NAVIGATION_LIST = "navigation-list";
-const NAVIGATION_LIST_ITEM = "navigation-list-item";
+import {
+  NavigationBody,
+  NavigationList,
+  NavigationListItem,
+} from "./styledComponents";
 
 // {  navigationList : {destinationName, destinationUrl} }
 
@@ -15,19 +15,18 @@ export function Navigation({ navigationList }) {
     location.search === "" ? "resources" : location.search.split("=")[1];
 
   return (
-    <nav className={NavigationStyles[NAVIGATION_BODY]}>
-      <ul className={NavigationStyles[NAVIGATION_LIST]}>
+    <NavigationBody>
+      <NavigationList>
         {navigationList.map(({ destinationUrl, destinationName }, index) => (
-          <li
+          <NavigationListItem
             key={index}
-            className={NavigationStyles[NAVIGATION_LIST_ITEM]}
             data-active={searchParams === destinationName.toLowerCase()}
             onClick={() => navigate(destinationUrl)}
           >
             {destinationName}
-          </li>
+          </NavigationListItem>
         ))}
-      </ul>
-    </nav>
+      </NavigationList>
+    </NavigationBody>
   );
 }

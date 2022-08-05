@@ -1,10 +1,9 @@
-export async function fetchResources() {
+export async function fetchResourceDetails({ resource_id }) {
   try {
     const response = await fetch(
-      "https://media-content.ccbp.in/website/react-assignment/resources.json"
+      `https://media-content.ccbp.in/website/react-assignment/resource/${resource_id}.json`
     );
 
-    // console.log(response);
     const responseData = await response.json();
     return responseData;
   } catch (error) {
