@@ -28,7 +28,6 @@ export function Home() {
     try {
       setIsResourceLoading(true);
       const responseData = await fetchResources();
-      // console.log(responseData);
       setResources(responseData);
     } catch (error) {
     } finally {

@@ -22,8 +22,10 @@ export function ResourceDetails() {
   const [isResourceDetailsLoading, setIsResourceDetailsLoading] =
     useState(true);
   const params = useParams();
-  const [startingIndex, setStartingindex] = useState(0);
+  const [startingIndex, setStartingIndex] = useState(0);
   const [selectedResoureItemsIds, setSelectedResourceItemsIds] = useState([]);
+  const [searchInputValue, setSearchInputValue] = useState("");
+  const [resourceItems, setResourceItems] = useState([]);
 
   const getResourceDetails = useCallback(
     async function () {
@@ -59,7 +61,7 @@ export function ResourceDetails() {
   }
 
   function onNextNavigation() {
-    setStartingindex((oldIndex) =>
+    setStartingIndex((oldIndex) =>
       oldIndex + RESOURCE_PAGE_LENGTH >= resourceDetails.resource_items.length
         ? oldIndex
         : oldIndex + RESOURCE_PAGE_LENGTH
@@ -67,7 +69,7 @@ export function ResourceDetails() {
   }
 
   function onBackNavigation() {
-    setStartingindex((oldIndex) =>
+    setStartingIndex((oldIndex) =>
       oldIndex - RESOURCE_PAGE_LENGTH < 0
         ? oldIndex
         : oldIndex - RESOURCE_PAGE_LENGTH
@@ -87,13 +89,36 @@ export function ResourceDetails() {
           )
       ),
     }));
+    setSelectedResourceItemsIds([]);
+  }
+
+  function onSearchInputChange(event) {
+    setSearchInputValue(event.target.value.trimStart());
   }
 
   useEffect(() => {
     getResourceDetails();
   }, [getResourceDetails]);
 
-  console.log(resourceDetails);
+  useEffect(() => {
+    if (resourceDetails) {
+      if (searchInputValue !== "") {
+        setResourceItems(
+          resourceDetails.resource_items.filter(
+            (resource_item) => resource_item.title === searchInputValue
+          )
+        );
+      } else {
+        setResourceItems(
+          resourceDetails.resource_items.slice(
+            startingIndex,
+            startingIndex + RESOURCE_PAGE_LENGTH
+          )
+        );
+      }
+    }
+  }, [resourceDetails, searchInputValue, startingIndex]);
+  // console.log(resourceDetails);
 
   return (
     <ResourceDetailsBody>
@@ -115,12 +140,12 @@ export function ResourceDetails() {
             resource_items_length={resourceDetails.resource_items.length}
           />
           <Button text={"UPDATE"} type={"primary"} />
-          <TableCrown />
+          <TableCrown
+            onSearchInputChange={onSearchInputChange}
+            searchInputValue={searchInputValue}
+          />
           <ItemsTable
-            resource_items={resourceDetails.resource_items.slice(
-              startingIndex,
-              startingIndex + RESOURCE_PAGE_LENGTH
-            )}
+            resource_items={resourceItems}
             onResourceItemSeleted={onResourceItemSeleted}
           />
           <TableShoe>

@@ -26,6 +26,8 @@ export const TableTopRightSortContainer = styled.div`
   margin-left: 2.1rem;
   display: flex;
   align-items: center;
+  position: relative;
+  cursor: pointer;
 
   & > p {
     font-weight: 600;
@@ -70,4 +72,44 @@ export const TableData = styled.td`
   color: var(--color-font-grey);
   padding-right: 3rem;
   // border: 1px solid red;
+`;
+
+// FILTER MENU
+
+export const FilterMenu = styled.div`
+  width: 15rem;
+  padding: 0.6rem 0.8rem;
+  // border: 1px solid red;
+  position: absolute;
+  top: 220%;
+  right: 0;
+  background-color: white;
+  border-radius: 0.4rem;
+  box-shadow: 0 0.3rem 0.5rem 0.1rem var(--color-border-grey);
+`;
+
+export const FilterMenuList = styled.ul`
+  list-style: none;
+  width: 100%;
+  height: 100%;
+`;
+
+export const FilterMenuListItem = styled.li`
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+  border-radius: 0.2rem;
+
+  :hover {
+    background-color: var(--color-dark-grey);
+    p {
+      color: var(--color-dark-blue);
+    }
+  }
+
+  p {
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    color: var(--color-font-grey);
+  }
 `;

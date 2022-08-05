@@ -36,3 +36,10 @@ export const SearchBarContainer = styled.div`
 `;
 
 export const ResourceListItem = styled.li``;
+
+export const Message = styled.p`
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  color: var(--color-font-grey);
+`;

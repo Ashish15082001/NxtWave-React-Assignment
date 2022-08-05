@@ -22,21 +22,30 @@ export function ItemsTable({ resource_items, onResourceItemSeleted }) {
       </TableHead>
 
       <TableBody>
-        {resource_items.map(({ createdAt, id, description, link, title }) => (
-          <TableRow key={id}>
-            <TableData>
-              <input
-                type="checkbox"
-                onChange={onResourceItemSeleted.bind(null, {
-                  resource_item_id: id,
-                })}
-              />
-            </TableData>
-            <TableData>{title}</TableData>
-            <TableData>{description}</TableData>
-            <TableData>{link}</TableData>
+        {resource_items.length === 0 && (
+          <TableRow>
+            <TableData></TableData>
+            <TableData></TableData>
+            <TableData>no items</TableData>
+            <TableData></TableData>
           </TableRow>
-        ))}
+        )}
+        {resource_items.length > 0 &&
+          resource_items.map(({ createdAt, id, description, link, title }) => (
+            <TableRow key={id}>
+              <TableData>
+                <input
+                  type="checkbox"
+                  onChange={onResourceItemSeleted.bind(null, {
+                    resource_item_id: id,
+                  })}
+                />
+              </TableData>
+              <TableData>{title}</TableData>
+              <TableData>{description}</TableData>
+              <TableData>{link}</TableData>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );
