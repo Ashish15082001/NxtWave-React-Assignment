@@ -99,6 +99,12 @@ export const FilterMenuListItem = styled.li`
   cursor: pointer;
   border-radius: 0.2rem;
 
+  [isActive="true"] {
+    background-color: var(--color-dark-grey);
+    p {
+      color: var(--color-dark-blue);
+    }
+  }
   :hover {
     background-color: var(--color-dark-grey);
     p {

@@ -12,12 +12,21 @@ import {
   TableTopTitle,
 } from "./styledComponent";
 
+// const DATE_FILTER = "Date";
+// const ASCENDING_FILTER = "Ascending";
+// const DESCENDING_FILTER = "Descending";
+
 export function TableCrown({
   onSearchInputChange,
   searchInputValue,
-  onFilterSelected,
+  sortInAscending,
+  sortInDescending,
+  sortByDate,
 }) {
   const [showFilter, setShowFilter] = useState(false);
+  // const [activeFilter, setActiveFilter] = useState("");
+  // console.log(activeFilter);
+
   return (
     <TableTop>
       <TableTopLeft>
@@ -33,13 +42,22 @@ export function TableCrown({
           {showFilter && (
             <FilterMenu>
               <FilterMenuList>
-                <FilterMenuListItem>
+                <FilterMenuListItem
+                  onClick={() => {
+                    // setActiveFilter(DATE_FILTER);
+                    sortByDate();
+                  }}
+                >
                   <p>Recently Added</p>
                 </FilterMenuListItem>
-                <FilterMenuListItem>
+                <FilterMenuListItem
+                  onClick={() => {
+                    sortInAscending();
+                  }}
+                >
                   <p>Ascending</p>
                 </FilterMenuListItem>
-                <FilterMenuListItem>
+                <FilterMenuListItem onClick={sortInDescending}>
                   <p>Descending</p>
                 </FilterMenuListItem>
               </FilterMenuList>

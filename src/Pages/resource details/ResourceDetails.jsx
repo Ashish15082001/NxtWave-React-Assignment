@@ -26,6 +26,8 @@ export function ResourceDetails() {
   const [selectedResoureItemsIds, setSelectedResourceItemsIds] = useState([]);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [resourceItems, setResourceItems] = useState([]);
+  const [resourceItemsSlice, setResourceItemSlice] = useState([]);
+  const [previousStartingIndex, setPreviousStartingindex] = useState(0);
 
   const getResourceDetails = useCallback(
     async function () {
@@ -62,7 +64,7 @@ export function ResourceDetails() {
 
   function onNextNavigation() {
     setStartingIndex((oldIndex) =>
-      oldIndex + RESOURCE_PAGE_LENGTH >= resourceDetails.resource_items.length
+      oldIndex + RESOURCE_PAGE_LENGTH >= resourceItems.length
         ? oldIndex
         : oldIndex + RESOURCE_PAGE_LENGTH
     );
@@ -79,16 +81,15 @@ export function ResourceDetails() {
   function onDeleteResourceItem() {
     if (selectedResoureItemsIds.length === 0) return;
 
-    setResourceDetails((oldResourceDetails) => ({
-      ...oldResourceDetails,
-      resource_items: oldResourceDetails.resource_items.filter(
+    setResourceItems((oldResourceItems) =>
+      oldResourceItems.filter(
         (resource_item) =>
           !selectedResoureItemsIds.some(
             (selectedResoureItemsId) =>
               selectedResoureItemsId === resource_item.id
           )
-      ),
-    }));
+      )
+    );
     setSelectedResourceItemsIds([]);
   }
 
@@ -96,29 +97,67 @@ export function ResourceDetails() {
     setSearchInputValue(event.target.value.trimStart());
   }
 
+  function sortInAscending() {
+    setResourceItems((oldResourceItems) => [
+      ...oldResourceItems.sort((a, b) =>
+        a.title > b.title ? 1 : b.title > a.title ? -1 : 0
+      ),
+    ]);
+  }
+
+  function sortInDescending() {
+    setResourceItems((oldResourceItems) => [
+      ...oldResourceItems.sort((a, b) =>
+        a.title < b.title ? 1 : b.title < a.title ? -1 : 0
+      ),
+    ]);
+    setStartingIndex(0);
+  }
+
+  function sortInAscending() {
+    setResourceItems((oldResourceItems) => [
+      ...oldResourceItems.sort((a, b) =>
+        b.title < a.title ? 1 : a.title < b.title ? -1 : 0
+      ),
+    ]);
+    setStartingIndex(0);
+  }
+
+  function sortByDate() {
+    setResourceItems((oldResourceItems) => [
+      ...oldResourceItems.sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      ),
+    ]);
+    setStartingIndex(0);
+  }
+
   useEffect(() => {
     getResourceDetails();
   }, [getResourceDetails]);
 
   useEffect(() => {
-    if (resourceDetails) {
-      if (searchInputValue !== "") {
-        setResourceItems(
-          resourceDetails.resource_items.filter(
-            (resource_item) => resource_item.title === searchInputValue
-          )
-        );
-      } else {
-        setResourceItems(
-          resourceDetails.resource_items.slice(
-            startingIndex,
-            startingIndex + RESOURCE_PAGE_LENGTH
-          )
-        );
-      }
+    if (resourceDetails) setResourceItems(resourceDetails.resource_items);
+  }, [resourceDetails]);
+
+  useEffect(() => {
+    if (searchInputValue !== "") {
+      // setPreviousStartingindex(startingIndex);
+      // setStartingIndex(0);
+    } else {
+      // setStartingIndex(previousStartingIndex);
+      // setPreviousStartingindex(0);
     }
-  }, [resourceDetails, searchInputValue, startingIndex]);
-  // console.log(resourceDetails);
+  }, [searchInputValue, startingIndex, previousStartingIndex]);
+
+  useEffect(() => {
+    setResourceItemSlice(
+      resourceItems.slice(startingIndex, startingIndex + RESOURCE_PAGE_LENGTH)
+    );
+  }, [resourceItems, startingIndex]);
+
+  console.log(startingIndex);
+  console.log(resourceItems);
 
   return (
     <ResourceDetailsBody>
@@ -143,14 +182,22 @@ export function ResourceDetails() {
           <TableCrown
             onSearchInputChange={onSearchInputChange}
             searchInputValue={searchInputValue}
+            sortInAscending={sortInAscending}
+            sortInDescending={sortInDescending}
+            sortByDate={sortByDate}
           />
           <ItemsTable
-            resource_items={resourceItems}
+            resource_items={resourceItemsSlice}
             onResourceItemSeleted={onResourceItemSeleted}
           />
           <TableShoe>
             <ButtonContainer>
               <Button
+                onClick={() =>
+                  navigate("/create-item", {
+                    state: { from: `/resource/${params.resource_id}` },
+                  })
+                }
                 text="ADD ITEM"
                 type="success"
                 disabled={selectedResoureItemsIds.length > 0}
