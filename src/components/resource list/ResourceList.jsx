@@ -3,7 +3,11 @@ import { useLocation } from "react-router-dom";
 import { ResourceCard } from "../../components/cards/resource card/ResourceCard";
 import { SearchBar } from "../../components/search bar/SearchBar";
 import { RESOURSES_TAB_VALUE } from "../../constants";
-import { ResourceListItem, ResourceItemList } from "./styledComponents";
+import {
+  ResourceListItem,
+  ResourceItemList,
+  SearchBarContainer,
+} from "./styledComponents";
 
 export function ResourceList({ resources }) {
   const [searchValue, setSearchValue] = useState("");
@@ -28,7 +32,9 @@ export function ResourceList({ resources }) {
 
   return (
     <ResourceItemList>
-      <SearchBar onChange={onSearchValueChange} value={searchValue} />
+      <SearchBarContainer>
+        <SearchBar onChange={onSearchValueChange} value={searchValue} />
+      </SearchBarContainer>
       {resources.map((resoure) => (
         <ResourceListItem key={resoure.id}>
           <ResourceCard

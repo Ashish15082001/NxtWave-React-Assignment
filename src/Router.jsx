@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Header } from "./components/header/Header";
 import { Home } from "./Pages/home/Home";
-import { ResourceDetail } from "./Pages/resource details/ResourceDetail";
+import { ResourceDetails } from "./Pages/resource details/ResourceDetails";
 import RouterStyles from "./Router.module.css";
 
 export function Router() {
@@ -16,7 +16,7 @@ export function Router() {
         <Route path="/home" element={<Home />}></Route>
         <Route
           path="/resource/:resource_id"
-          element={<ResourceDetail />}
+          element={<ResourceDetails />}
         ></Route>
       </Routes>
     </div>

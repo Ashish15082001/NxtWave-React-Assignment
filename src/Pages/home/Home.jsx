@@ -43,7 +43,11 @@ export function Home() {
   return (
     <div className={HomeStyles[HOME_BODY]}>
       <Navigation navigationList={NAVIGATION_LIST} />
-      {isResoureLoading && <h1>loading resources...</h1>}
+      {isResoureLoading && (
+        <h1 style={{ textAlign: "center", marginTop: "5rem" }}>
+          loading resources...
+        </h1>
+      )}
       {!isResoureLoading && <ResourceList resources={resources} />}
     </div>
   );

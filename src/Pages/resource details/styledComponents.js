@@ -17,6 +17,7 @@ export const BackNavigationContainer = styled.div`
     margin-right: 0.9rem;
     display: flex;
     align-items: center;
+    cursor: pointer;
   }
   & > p {
     font-weight: 400;
