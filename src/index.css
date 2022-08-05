@@ -26,6 +26,10 @@ body {
   --color-error: #ff0b37;
 }
 
+span, svg {
+  display: inline-block;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

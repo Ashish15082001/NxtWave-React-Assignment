@@ -1,13 +1,15 @@
-import { HeaderBody } from "./styledComponents";
+import { NxtWaveIcon } from "../../icons/NxtWaveIcon";
+import { Avatar, HeaderBody } from "./styledComponents";
 
 export function Header() {
   return (
     <HeaderBody>
       <div>
-        {/* <img src="../../images/companyLogo.jpg" alt="company logo"/> */}
-        <h3>NxtWave</h3>
+        <span>
+          <NxtWaveIcon />
+        </span>
       </div>
-      <h3>Avatar</h3>
+      <Avatar></Avatar>
     </HeaderBody>
   );
 }
