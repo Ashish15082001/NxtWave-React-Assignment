@@ -7,7 +7,8 @@
   grid-template-columns: 4.6rem 1fr;
   align-items: center;
   padding: 0.8rem;
-  width: 64.8rem;
+  width: 100%;
+  max-width: 64.8rem;
 }
 
 .logo-container {
@@ -29,18 +30,4 @@
 
 .input::placeholder {
   color: var(--color-font-placeholder);
-}
-
-@media only screen and (max-width: 1200px) {
-  .input-container {
-    grid-column-end: 3;
-    width: 100%;
-  }
-}
-
-@media only screen and (max-width: 800px) {
-  .input-container {
-    grid-column-end: 2;
-    width: 100%;
-  }
 }

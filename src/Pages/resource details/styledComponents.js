@@ -26,3 +26,17 @@ export const BackNavigationContainer = styled.div`
     color: var(--color-font-grey);
   }
 `;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+
+  & > button {
+    margin-right: 2.4rem;
+  }
+`;
+
+export const TableShoe = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-block: 2.4rem;
+`;

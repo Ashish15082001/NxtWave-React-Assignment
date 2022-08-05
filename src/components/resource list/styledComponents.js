@@ -24,6 +24,15 @@ export const ResourceItemList = styled.ul`
 export const SearchBarContainer = styled.div`
   grid-column-start: 1;
   grid-column-end: 4;
+  // border: 1px solid red;
+
+  @media only screen and (max-width: 1200px) {
+    grid-column-end: 3;
+  }
+
+  @media only screen and (max-width: 800px) {
+    grid-column-end: 2;
+  }
 `;
 
 export const ResourceListItem = styled.li``;

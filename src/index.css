@@ -22,6 +22,8 @@ body {
   --color-dark-grey: rgba(215, 223, 233, 0.24);
   --color-font-grey: #7e858e;
   --color-font-placeholder: rgba(126, 133, 142, 0.6);
+  --color-success: #2dca73;
+  --color-error: #ff0b37;
 }
 
 code {
