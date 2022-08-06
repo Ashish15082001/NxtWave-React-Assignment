@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { fetchResources } from "./api/fetchResources";
@@ -8,28 +8,31 @@ import { Home } from "./Pages/home/Home";
 import { ResourceDetails } from "./Pages/resource details/ResourceDetails";
 import RouterStyles from "./Router.module.css";
 import {
-  changeResourceState,
+  changeResourceStatus,
   resourcesStatus,
   setResources,
-} from "./store/slices/resources";
+} from "./store/slices/resourcesSlice";
 
 export function Router() {
   const dispatch = useDispatch();
 
-  async function getResources() {
-    try {
-      dispatch(changeResourceState({ state: resourcesStatus.loading }));
-      const responseData = await fetchResources();
-      dispatch(setResources({ resources: responseData }));
-    } catch (error) {
-    } finally {
-      dispatch(changeResourceState({ state: resourcesStatus.idle }));
-    }
-  }
+  const getResources = useCallback(
+    async function () {
+      try {
+        dispatch(changeResourceStatus({ status: resourcesStatus.loading }));
+        const responseData = await fetchResources();
+        dispatch(setResources({ entities: responseData }));
+      } catch (error) {
+      } finally {
+        dispatch(changeResourceStatus({ status: resourcesStatus.idle }));
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     getResources();
-  }, []);
+  }, [getResources]);
 
   return (
     <div className={RouterStyles["page-body"]}>

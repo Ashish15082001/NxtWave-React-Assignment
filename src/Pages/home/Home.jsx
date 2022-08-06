@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import { fetchResources } from "../../api/fetchResources";
 import { Navigation } from "../../components/navigation/Navigation";
 import { ResourceList } from "../../components/resource list/ResourceList";
+import { useSelector } from "react-redux";
 import HomeStyles from "./Home.module.css";
+import { resourcesStatus } from "../../store/slices/resourcesSlice";
 
 const NAVIGATION_LIST = [
   {
@@ -21,33 +21,23 @@ const NAVIGATION_LIST = [
 const HOME_BODY = "home-body";
 
 export function Home() {
-  const [resources, setResources] = useState(null);
-  const [isResoureLoading, setIsResourceLoading] = useState(true);
-
-  async function getResources() {
-    try {
-      setIsResourceLoading(true);
-      const responseData = await fetchResources();
-      setResources(responseData);
-    } catch (error) {
-    } finally {
-      setIsResourceLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getResources();
-  }, []);
+  const resources = useSelector((state) => state.resources.entities);
+  const isResourceLoading = useSelector(
+    (state) => state.status === resourcesStatus.loading
+  );
 
   return (
     <div className={HomeStyles[HOME_BODY]}>
       <Navigation navigationList={NAVIGATION_LIST} />
-      {isResoureLoading && (
+      {isResourceLoading && (
         <h1 style={{ textAlign: "center", marginTop: "5rem" }}>
           loading resources...
         </h1>
       )}
-      {!isResoureLoading && <ResourceList resources={resources} />}
+      {!isResourceLoading && resources.length === 0 && (
+        <h1 style={{ textAlign: "center", marginTop: "5rem" }}>No items.</h1>
+      )}
+      {!isResourceLoading && <ResourceList resources={resources} />}
     </div>
   );
 }

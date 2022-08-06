@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { resourcesSliceReducer } from "./slices/resources";
+import { resourcesDetailsSliceReducer } from "./slices/resourcesDetailsSlice";
+import { resourcesSliceReducer } from "./slices/resourcesSlice";
 
 export const store = configureStore({
   reducer: {
     resources: resourcesSliceReducer,
+    resourcesDetails: resourcesDetailsSliceReducer,
   },
 });

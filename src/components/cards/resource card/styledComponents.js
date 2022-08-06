@@ -53,6 +53,7 @@ export const CardLowerLink = styled.a`
   line-height: 2.4rem;
   margin-bottom: 0.8rem;
   color: var(--color-blue);
+  text-decoration: none;
 `;
 
 export const CardLowerDescription = styled.p`
