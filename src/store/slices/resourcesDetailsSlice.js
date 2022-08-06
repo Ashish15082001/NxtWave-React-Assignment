@@ -22,6 +22,7 @@ export const resourcesDetailsSlice = createSlice({
     },
     addNewItemToResourceDetails(state, action) {
       const { item } = action.payload;
+      // console.log(item);
       for (let key in state.entities)
         if (state.entities[key].title === item.resourceName) {
           state.entities[key].resource_items.push({
@@ -33,8 +34,6 @@ export const resourcesDetailsSlice = createSlice({
           });
           break;
         }
-      console.log(item);
-      // console.log(state.entities);
     },
   },
 });
