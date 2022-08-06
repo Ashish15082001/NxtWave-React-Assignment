@@ -24,7 +24,7 @@ export const FormLabel = styled.p`
   line-height: 1.6rem;
   color: var(--color-font-grey);
   margin-bottom: 0.8rem;
-  margin-top: 3.2rem;
+
   width: 100%;
 `;
 
@@ -40,6 +40,7 @@ export const FormInput = styled.input`
   border: 0.1rem solid var(--color-border-grey);
   border-radius: 0.2rem;
   width: 100%;
+  margin-bottom: 3.2rem;
 `;
 
 export const FormTextArea = styled.textarea`

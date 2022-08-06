@@ -35,7 +35,7 @@ export const DetailCardImage = styled.img`
   width: 100%;
 `;
 
-export const DetailCardLink = styled.a`
+export const DetailCardLink = styled.p`
   font-weight: 400;
   font-size: 14px;
   line-height: 24px;
