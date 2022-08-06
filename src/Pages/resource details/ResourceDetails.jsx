@@ -176,7 +176,7 @@ export function ResourceDetails() {
             id={resourceDetails.id}
             link={resourceDetails.link}
             title={resourceDetails.title}
-            resource_items_length={resourceDetails.resource_items.length}
+            resource_items_length={resourceItems.length}
           />
           <Button text={"UPDATE"} type={"primary"} />
           <TableCrown

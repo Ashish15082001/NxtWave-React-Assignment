@@ -12,4 +12,5 @@ export const NavigationIconContainer = styled.div`
   border-radius: 0.2rem;
   cursor: pointer;
   border: 0.1rem solid var(--color-border-grey);
+  margin-left: 0.8rem;
 `;

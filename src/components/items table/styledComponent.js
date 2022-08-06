@@ -40,6 +40,7 @@ export const TableTopRightSortContainer = styled.div`
 // TABLE
 
 export const Table = styled.table`
+  border-collapse: collapse;
   border: 0.1rem solid var(--color-border-grey);
   border-radius: 0.7rem;
   width: 100%;
@@ -58,7 +59,7 @@ export const TableHeader = styled.th`
 export const TableBody = styled.tbody``;
 
 export const TableRow = styled.tr`
-  // border-block: 1px solid var(--color-border-grey);
+  border-block: 1px solid var(--color-border-grey);
   display: block;
   padding: 2rem;
   display: grid;

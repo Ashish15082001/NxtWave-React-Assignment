@@ -105,8 +105,8 @@ export function NxtWaveIcon() {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.0702074" stop-opacity="0.9298" />
-          <stop offset="1" stop-opacity="0" />
+          <stop offset="0.0702074" stopOpacity="0.9298" />
+          <stop offset="1" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_13_1186"
@@ -116,8 +116,8 @@ export function NxtWaveIcon() {
           y2="11.0084"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-opacity="0" />
-          <stop offset="0.9298" stop-opacity="0.9298" />
+          <stop stopOpacity="0" />
+          <stop offset="0.9298" stopOpacity="0.9298" />
           <stop offset="1" />
         </linearGradient>
         <linearGradient
@@ -128,7 +128,7 @@ export function NxtWaveIcon() {
           y2="25.3541"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-opacity="0" />
+          <stop stopOpacity="0" />
           <stop offset="1" />
         </linearGradient>
         <linearGradient
@@ -139,8 +139,8 @@ export function NxtWaveIcon() {
           y2="3.54711"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-opacity="0" />
-          <stop offset="0.9298" stop-opacity="0.9298" />
+          <stop stopOpacity="0" />
+          <stop offset="0.9298" stopOpacity="0.9298" />
           <stop offset="1" />
         </linearGradient>
         <linearGradient
@@ -152,8 +152,8 @@ export function NxtWaveIcon() {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.0702074" stop-opacity="0.9298" />
-          <stop offset="1" stop-opacity="0" />
+          <stop offset="0.0702074" stopOpacity="0.9298" />
+          <stop offset="1" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_13_1186"
@@ -164,8 +164,8 @@ export function NxtWaveIcon() {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.0702074" stop-opacity="0.9298" />
-          <stop offset="1" stop-opacity="0" />
+          <stop offset="0.0702074" stopOpacity="0.9298" />
+          <stop offset="1" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint6_linear_13_1186"
@@ -176,8 +176,8 @@ export function NxtWaveIcon() {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.0702074" stop-opacity="0.9298" />
-          <stop offset="1" stop-opacity="0" />
+          <stop offset="0.0702074" stopOpacity="0.9298" />
+          <stop offset="1" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint7_linear_13_1186"
@@ -188,8 +188,8 @@ export function NxtWaveIcon() {
           gradientUnits="userSpaceOnUse"
         >
           <stop />
-          <stop offset="0.0702074" stop-opacity="0.9298" />
-          <stop offset="1" stop-opacity="0" />
+          <stop offset="0.0702074" stopOpacity="0.9298" />
+          <stop offset="1" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
