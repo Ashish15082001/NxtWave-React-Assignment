@@ -20,6 +20,22 @@ export const resourcesDetailsSlice = createSlice({
       const { id, resourceItems } = action.payload;
       state.entities[id].resource_items = resourceItems;
     },
+    addNewItemToResourceDetails(state, action) {
+      const { item } = action.payload;
+      for (let key in state.entities)
+        if (state.entities[key].title === item.resourceName) {
+          state.entities[key].resource_items.push({
+            id: "",
+            link: item.link,
+            title: item.itemName,
+            ceatedAt: new Date().toISOString(),
+            description: item.description,
+          });
+          break;
+        }
+      // console.log(item);
+      // console.log(state.entities);
+    },
   },
 });
 
@@ -29,4 +45,5 @@ export const {
   setResourcesDetails,
   changeResourcesDetailsStatus,
   updateResourceDetails,
+  addNewItemToResourceDetails,
 } = resourcesDetailsSlice.actions;

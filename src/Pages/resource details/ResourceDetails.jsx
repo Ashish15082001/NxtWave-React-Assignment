@@ -217,6 +217,8 @@ export function ResourceDetails() {
     }
   }, [searchInputValue, resourceDetails]);
 
+  // console.log(resourceDetails);
+
   return (
     <ResourceDetailsBody>
       <ToastContainer />

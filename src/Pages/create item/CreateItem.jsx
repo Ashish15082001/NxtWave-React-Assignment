@@ -5,12 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { createItem } from "../../api/createItem";
 import { Form } from "../../components/form/Form";
 import { BackIcon } from "../../icons/BackIcon";
+import { addNewItemToResourceDetails } from "../../store/slices/resourcesDetailsSlice";
 import {
   BackNavigationContainer,
   LeftContainer,
   MainContainer,
   RightContainer,
 } from "./styledComponents";
+import { useDispatch } from "react-redux";
 
 export function CreateItem() {
   const navigate = useNavigate();
@@ -20,6 +22,7 @@ export function CreateItem() {
   const [resourceName, setResourceName] = useState("");
   const [description, setDescription] = useState("");
   const [isCreatingItem, setIsCreatingItem] = useState(false);
+  const dispatch = useDispatch();
 
   const formStructures = [
     {
@@ -68,6 +71,7 @@ export function CreateItem() {
 
   async function onSubmit(event) {
     try {
+      if (isCreatingItem) return;
       setIsCreatingItem(true);
       event.preventDefault();
       if (
@@ -84,6 +88,11 @@ export function CreateItem() {
       setLink("");
       setResourceName("");
       setDescription("");
+      dispatch(
+        addNewItemToResourceDetails({
+          item: { itemName, resourceName, link, description },
+        })
+      );
       showSuccess(response.message);
     } catch (error) {
       showError(error.message);
