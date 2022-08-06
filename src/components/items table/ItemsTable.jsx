@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,9 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "./styledComponent";
+import { Link } from "react-router-dom";
 
 export function ItemsTable({ resource_items, onResourceItemSeleted }) {
-  // console.log(resource_items);
+  const [selectedRow, setSelectedRow] = useState({});
+
   return (
     <Table>
       <TableHead>
@@ -32,18 +34,34 @@ export function ItemsTable({ resource_items, onResourceItemSeleted }) {
         )}
         {resource_items.length > 0 &&
           resource_items.map(({ createdAt, id, description, link, title }) => (
-            <TableRow key={id}>
+            <TableRow key={id} isActive={selectedRow[id] ? "true" : "false"}>
               <TableData>
                 <input
                   type="checkbox"
-                  onChange={onResourceItemSeleted.bind(null, {
-                    resource_item_id: id,
-                  })}
+                  onChange={() => {
+                    setSelectedRow((oldSelectedRow) => {
+                      if (oldSelectedRow[id])
+                        return { ...oldSelectedRow, [id]: undefined };
+                      else return { ...oldSelectedRow, [id]: id };
+                    });
+                    onResourceItemSeleted({
+                      resource_item_id: id,
+                    });
+                  }}
                 />
               </TableData>
               <TableData>{title}</TableData>
               <TableData>{description}</TableData>
-              <TableData>{link}</TableData>
+              <TableData>
+                <Link
+                  target="_blank"
+                  to={link}
+                  rel="noopener noreferrer"
+                  style={{ color: "var(--color-blue)", textDecoration: "none" }}
+                >
+                  {link}
+                </Link>
+              </TableData>
             </TableRow>
           ))}
       </TableBody>

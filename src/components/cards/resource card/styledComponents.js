@@ -44,7 +44,17 @@ export const CardUpperLeft = styled.div`
 
 export const CardUpperRight = styled.div``;
 
-export const CardLower = styled.div``;
+export const CardLower = styled.div`
+  a {
+    margin-top: 2rem;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--color-blue);
+    text-decoration: none;
+  }
+`;
 
 export const CardLowerLink = styled.a`
   margin-top: 2rem;

@@ -10,6 +10,7 @@ import {
   DetailCardUpperLeft,
   DetailCardUpperRight,
 } from "./styledComponents";
+import { Link } from "react-router-dom";
 
 export function ResourceDetailsCard({
   description,
@@ -31,7 +32,16 @@ export function ResourceDetailsCard({
         <DetailCardUpperRight>
           <DetailCardTitle>{title}</DetailCardTitle>
           <DetailCardItemsLength>{resource_items_length}</DetailCardItemsLength>
-          <DetailCardLink>{link}</DetailCardLink>
+          <DetailCardLink>
+            <Link
+              target="_blank"
+              to={link}
+              rel="noopener noreferrer"
+              style={{ color: "var(--color-blue)", textDecoration: "none" }}
+            >
+              {link}
+            </Link>
+          </DetailCardLink>
         </DetailCardUpperRight>
       </DetailCardUpper>
       <DetailCardLower>

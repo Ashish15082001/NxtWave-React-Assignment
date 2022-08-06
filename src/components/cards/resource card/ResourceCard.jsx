@@ -10,6 +10,7 @@ import {
   CardUpperLeft,
   CardUpperRight,
 } from "./styledComponents";
+import { Link } from "react-router-dom";
 
 export function ResourceCard({
   category,
@@ -38,7 +39,14 @@ export function ResourceCard({
         </CardUpperRight>
       </CardUpper>
       <CardLower>
-        <CardLowerLink href={link}>{link}</CardLowerLink>
+        <Link
+          target="_blank"
+          to={link}
+          rel="noopener noreferrer"
+          style={{ color: "var(--color-blue)", textDecoration: "none" }}
+        >
+          {link}
+        </Link>
         <CardLowerDescription>{description}</CardLowerDescription>
       </CardLower>
     </CardBody>

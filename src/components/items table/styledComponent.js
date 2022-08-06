@@ -58,12 +58,18 @@ export const TableHeader = styled.th`
 
 export const TableBody = styled.tbody``;
 
-export const TableRow = styled.tr`
+export const TableRow = styled.tr.attrs(({ isActive }) => ({
+  data: isActive,
+}))`
   border-block: 1px solid var(--color-border-grey);
   display: block;
   padding: 2rem;
   display: grid;
   grid-template-columns: 13rem 23.3rem 33rem 1fr;
+
+  &[data="true"] {
+    background-color: var(--color-dark-grey);
+  }
 `;
 
 export const TableData = styled.td`
