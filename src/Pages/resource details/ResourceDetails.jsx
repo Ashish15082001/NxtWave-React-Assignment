@@ -120,7 +120,7 @@ export function ResourceDetails() {
 
   function sortInAscending() {
     setResourceItems((oldResourceItems) => [
-      ...oldResourceItems.sort((a, b) =>
+      ...[...oldResourceItems].sort((a, b) =>
         a.title > b.title ? 1 : b.title > a.title ? -1 : 0
       ),
     ]);
@@ -128,7 +128,7 @@ export function ResourceDetails() {
 
   function sortInDescending() {
     setResourceItems((oldResourceItems) => [
-      ...oldResourceItems.sort((a, b) =>
+      ...[...oldResourceItems].sort((a, b) =>
         a.title < b.title ? 1 : b.title < a.title ? -1 : 0
       ),
     ]);
@@ -179,8 +179,8 @@ export function ResourceDetails() {
 
   function sortByDate() {
     setResourceItems((oldResourceItems) => [
-      ...oldResourceItems.sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      ...[...oldResourceItems].sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       ),
     ]);
     setStartingIndex(0);

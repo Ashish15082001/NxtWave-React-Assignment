@@ -25,15 +25,15 @@ export const resourcesDetailsSlice = createSlice({
       for (let key in state.entities)
         if (state.entities[key].title === item.resourceName) {
           state.entities[key].resource_items.push({
-            id: "",
+            id: Math.random().toString(),
             link: item.link,
             title: item.itemName,
-            ceatedAt: new Date().toISOString(),
+            createdAt: new Date().toISOString(),
             description: item.description,
           });
           break;
         }
-      // console.log(item);
+      console.log(item);
       // console.log(state.entities);
     },
   },

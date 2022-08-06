@@ -15,7 +15,7 @@ import {
 
 export function Router() {
   const dispatch = useDispatch();
-
+  // const storeData = useSelector((state) => state);
   const getResources = useCallback(
     async function () {
       try {
@@ -33,6 +33,8 @@ export function Router() {
   useEffect(() => {
     getResources();
   }, [getResources]);
+
+  // console.log(storeData);
 
   return (
     <div className={RouterStyles["page-body"]}>
