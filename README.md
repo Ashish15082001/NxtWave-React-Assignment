@@ -1,3 +1,6 @@
+# Has some bugs. (mainly 2 bugs)
+Currently working on it.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
