@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchResourceDetails } from "../../api/fetchResourceDetails";
@@ -23,9 +23,13 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { updateItem } from "../../api/updateItem";
 
-const RESOURCE_PAGE_LENGTH = 6;
+const PAGE_LENGTH = 6;
 
 export function ResourceDetails() {
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [searchInputValue, setSearchInputValueChange] = useState("");
+  const [selectedResourceItemsIds, setSelectedResourceItemsIds] = useState([]);
+  const [deletedResourceItemsIds, setDeletedResourceItemsIds] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useDispatch();
@@ -35,12 +39,17 @@ export function ResourceDetails() {
   const isResourceDetailsLoading = useSelector(
     (state) => state.resourcesDetails.status === resourcesDetailsStatus.loading
   );
-
-  const [startingIndex, setStartingIndex] = useState(0);
-  const [selectedResoureItemsIds, setSelectedResourceItemsIds] = useState([]);
-  const [searchInputValue, setSearchInputValue] = useState("");
-  const [resourceItems, setResourceItems] = useState([]);
-  const [resourceItemsSlice, setResourceItemSlice] = useState([]);
+  const [resourceItems, setResourceItems] = useState(
+    resourceDetails?.resource_items ? resourceDetails.resource_items : []
+  );
+  const currentPageresourceItemsSlice = useMemo(() => {
+    const startingIndex = (currentPageNumber - 1) * 6;
+    return resourceItems.slice(startingIndex, startingIndex + PAGE_LENGTH);
+  }, [currentPageNumber, resourceItems]);
+  const numberOfPages = useMemo(
+    () => Math.ceil(resourceItems.length / PAGE_LENGTH),
+    [resourceItems]
+  );
 
   const getResourceDetails = useCallback(
     async function () {
@@ -53,7 +62,7 @@ export function ResourceDetails() {
         const response = await fetchResourceDetails({
           resource_id: params.resource_id,
         });
-        // console.log(response);
+        setResourceItems(response.resource_items);
         dispatch(setResourcesDetails({ entity: response }));
       } catch (error) {
       } finally {
@@ -69,7 +78,7 @@ export function ResourceDetails() {
 
   function onResourceItemSeleted({ resource_item_id }) {
     if (
-      selectedResoureItemsIds.findIndex((id) => id === resource_item_id) === -1
+      selectedResourceItemsIds.findIndex((id) => id === resource_item_id) === -1
     )
       setSelectedResourceItemsIds((oldResourceItemsIds) => [
         ...oldResourceItemsIds,
@@ -84,38 +93,49 @@ export function ResourceDetails() {
   }
 
   function onNextNavigation() {
-    setStartingIndex((oldIndex) =>
-      oldIndex + RESOURCE_PAGE_LENGTH >= resourceItems.length
-        ? oldIndex
-        : oldIndex + RESOURCE_PAGE_LENGTH
-    );
+    if (currentPageNumber >= numberOfPages) return;
+    setCurrentPageNumber((oldCurrentPageNumber) => oldCurrentPageNumber + 1);
   }
 
   function onBackNavigation() {
-    setStartingIndex((oldIndex) =>
-      oldIndex - RESOURCE_PAGE_LENGTH < 0
-        ? oldIndex
-        : oldIndex - RESOURCE_PAGE_LENGTH
-    );
+    if (currentPageNumber <= 1) return;
+    setCurrentPageNumber((oldCurrentPageNumber) => oldCurrentPageNumber - 1);
+  }
+
+  function onNthNavigation(pageNumber) {
+    setCurrentPageNumber(pageNumber);
+  }
+
+  function onSearchInputValueChange(event) {
+    const searchValue = event.target.value.trimStart();
+    const newResourceItems =
+      searchValue === ""
+        ? resourceDetails.resource_items
+        : resourceDetails.resource_items.filter(
+            (resourceItem) => resourceItem.title === searchValue
+          );
+
+    setResourceItems(newResourceItems);
+    setSearchInputValueChange(searchValue);
+    setCurrentPageNumber(1);
   }
 
   function onDeleteResourceItem() {
-    if (selectedResoureItemsIds.length === 0) return;
+    if (selectedResourceItemsIds.length === 0) return;
 
-    setResourceItems((oldResourceItems) =>
-      oldResourceItems.filter(
-        (resource_item) =>
-          !selectedResoureItemsIds.some(
-            (selectedResoureItemsId) =>
-              selectedResoureItemsId === resource_item.id
-          )
-      )
+    const updatedResourceItems = resourceItems.filter(
+      (resourceItem) =>
+        !selectedResourceItemsIds.some(
+          (selectedResourceItemId) => selectedResourceItemId === resourceItem.id
+        )
     );
-    setSelectedResourceItemsIds([]);
-  }
 
-  function onSearchInputChange(event) {
-    setSearchInputValue(event.target.value.trimStart());
+    setDeletedResourceItemsIds((oldDeletedResourceItemsIds) => [
+      ...oldDeletedResourceItemsIds,
+      ...selectedResourceItemsIds,
+    ]);
+    setSelectedResourceItemsIds([]);
+    setResourceItems(updatedResourceItems);
   }
 
   function sortInAscending() {
@@ -132,19 +152,19 @@ export function ResourceDetails() {
         a.title < b.title ? 1 : b.title < a.title ? -1 : 0
       ),
     ]);
-    setStartingIndex(0);
   }
 
   async function onUpdateResourceItems() {
     try {
-      if (searchInputValue !== "") return;
+      if (deletedResourceItemsIds.length === 0) return;
       await updateItem();
       dispatch(
         updateResourceDetails({
           id: resourceDetails.id,
-          resourceItems,
+          deletedResourceItemsIds,
         })
       );
+      setDeletedResourceItemsIds([]);
       showSuccess("Succesfully updated resource items.");
     } catch (error) {
       showError(error.message);
@@ -183,41 +203,15 @@ export function ResourceDetails() {
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       ),
     ]);
-    setStartingIndex(0);
   }
 
   useEffect(() => {
     if (!resourceDetails) getResourceDetails();
   }, [getResourceDetails, resourceDetails]);
 
-  useEffect(() => {
-    if (resourceDetails) setResourceItems(resourceDetails.resource_items);
-  }, [resourceDetails]);
-
-  useEffect(() => {
-    setResourceItemSlice(
-      resourceItems.slice(startingIndex, startingIndex + RESOURCE_PAGE_LENGTH)
-    );
-  }, [resourceItems, startingIndex]);
-
-  useEffect(() => {
-    if (resourceDetails) {
-      if (searchInputValue !== "") {
-        setResourceItems(
-          resourceDetails.resource_items.filter(
-            (oldResourceItem) => oldResourceItem.title === searchInputValue
-          )
-        );
-        setStartingIndex(0);
-      }
-      if (searchInputValue === "") {
-        setStartingIndex(0);
-        setResourceItems(resourceDetails.resource_items);
-      }
-    }
-  }, [searchInputValue, resourceDetails]);
-
-  // console.log(resourceDetails);
+  // useEffect(() => {
+  //   console.log(deletedResourceItemsIds);
+  // }, [deletedResourceItemsIds]);
 
   return (
     <ResourceDetailsBody>
@@ -245,14 +239,14 @@ export function ResourceDetails() {
             onClick={onUpdateResourceItems}
           />
           <TableCrown
-            onSearchInputChange={onSearchInputChange}
+            onSearchInputValueChange={onSearchInputValueChange}
             searchInputValue={searchInputValue}
             sortInAscending={sortInAscending}
             sortInDescending={sortInDescending}
             sortByDate={sortByDate}
           />
           <ItemsTable
-            resource_items={resourceItemsSlice}
+            resource_items={currentPageresourceItemsSlice}
             onResourceItemSeleted={onResourceItemSeleted}
           />
           <TableShoe>
@@ -265,18 +259,21 @@ export function ResourceDetails() {
                 }
                 text="ADD ITEM"
                 type="success"
-                disabled={selectedResoureItemsIds.length > 0}
+                disabled={selectedResourceItemsIds.length > 0}
               />
               <Button
                 text="DELETE ITEM"
                 type="error"
                 onClick={onDeleteResourceItem}
-                disabled={selectedResoureItemsIds.length === 0}
+                disabled={selectedResourceItemsIds.length === 0}
               />
             </ButtonContainer>
             <PageNavigation
+              onNthNavigation={onNthNavigation}
+              numberOfPages={numberOfPages}
               onNextNavigation={onNextNavigation}
               onBackNavigation={onBackNavigation}
+              currentPageNumber={currentPageNumber}
             />
           </TableShoe>
         </React.Fragment>

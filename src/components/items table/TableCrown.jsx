@@ -17,7 +17,7 @@ import {
 // const DESCENDING_FILTER = "Descending";
 
 export function TableCrown({
-  onSearchInputChange,
+  onSearchInputValueChange,
   searchInputValue,
   sortInAscending,
   sortInDescending,
@@ -33,7 +33,10 @@ export function TableCrown({
         <TableTopTitle>Items</TableTopTitle>
       </TableTopLeft>
       <TableTopRight>
-        <SearchBar onChange={onSearchInputChange} value={searchInputValue} />
+        <SearchBar
+          onChange={onSearchInputValueChange}
+          value={searchInputValue}
+        />
         <TableTopRightSortContainer
           onClick={() => setShowFilter((oldState) => !oldState)}
         >

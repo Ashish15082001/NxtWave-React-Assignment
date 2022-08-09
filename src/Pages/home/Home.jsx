@@ -23,8 +23,10 @@ const HOME_BODY = "home-body";
 export function Home() {
   const resources = useSelector((state) => state.resources.entities);
   const isResourceLoading = useSelector(
-    (state) => state.status === resourcesStatus.loading
+    (state) => state.resources.status === resourcesStatus.loading
   );
+
+  console.log(isResourceLoading);
 
   return (
     <div className={HomeStyles[HOME_BODY]}>

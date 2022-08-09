@@ -17,23 +17,31 @@ export const resourcesDetailsSlice = createSlice({
       state.status = status;
     },
     updateResourceDetails(state, action) {
-      const { id, resourceItems } = action.payload;
-      state.entities[id].resource_items = resourceItems;
+      const { id, deletedResourceItemsIds } = action.payload;
+      const updatedResourceItems = state.entities[id].resource_items.filter(
+        (resourceItem) =>
+          !deletedResourceItemsIds.some(
+            (deletedResourceItemId) => deletedResourceItemId === resourceItem.id
+          )
+      );
+
+      state.entities[id].resource_items = updatedResourceItems;
     },
     addNewItemToResourceDetails(state, action) {
-      const { item } = action.payload;
-      // console.log(item);
-      for (let key in state.entities)
-        if (state.entities[key].title === item.resourceName) {
-          state.entities[key].resource_items.push({
-            id: Math.random().toString(),
-            link: item.link,
-            title: item.itemName,
-            createdAt: new Date().toISOString(),
-            description: item.description,
-          });
-          break;
-        }
+      const { id, deletedSourceItemsIds } = action.payload;
+      console.log(id);
+      console.log(deletedSourceItemsIds);
+      // for (let key in state.entities)
+      //   if (state.entities[key].title === item.resourceName) {
+      //     state.entities[key].resource_items.push({
+      //       id: Math.random().toString(),
+      //       link: item.link,
+      //       title: item.itemName,
+      //       createdAt: new Date().toISOString(),
+      //       description: item.description,
+      //     });
+      //     break;
+      //   }
     },
   },
 });
