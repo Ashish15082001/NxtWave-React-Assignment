@@ -1,4 +1,4 @@
-# Has some bugs. (mainly 2 bugs)
+# Has some bugs. (mainly 1 bug)
 Currently working on it.
 
 # Getting Started with Create React App
