@@ -14,7 +14,6 @@ export function PageNavigation({
   numberOfPages,
   currentPageNumber,
 }) {
-  console.log(numberOfPages);
   let instantNavigation = [];
   for (let i = 1; i <= numberOfPages; i++) instantNavigation.push(i);
 
