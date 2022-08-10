@@ -153,7 +153,7 @@ export function ResourceDetails() {
   }
 
   function sortInAscending() {
-    setResourceItems((oldResourceItems) => [
+    setCurrentResourceItems((oldResourceItems) => [
       ...[...oldResourceItems].sort((a, b) =>
         a.title > b.title ? 1 : b.title > a.title ? -1 : 0
       ),
@@ -161,7 +161,7 @@ export function ResourceDetails() {
   }
 
   function sortInDescending() {
-    setResourceItems((oldResourceItems) => [
+    setCurrentResourceItems((oldResourceItems) => [
       ...[...oldResourceItems].sort((a, b) =>
         a.title < b.title ? 1 : b.title < a.title ? -1 : 0
       ),
@@ -212,7 +212,7 @@ export function ResourceDetails() {
   }
 
   function sortByDate() {
-    setResourceItems((oldResourceItems) => [
+    setCurrentResourceItems((oldResourceItems) => [
       ...[...oldResourceItems].sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       ),
