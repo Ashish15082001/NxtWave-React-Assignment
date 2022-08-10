@@ -28,21 +28,18 @@ export const resourcesDetailsSlice = createSlice({
       state.entities[id].resource_items = updatedResourceItems;
     },
     addNewItemToResourceDetails(state, action) {
-      console.log(action.payload)
-      // const { id, deletedSourceItemsIds } = action.payload;
-      // console.log(id);
-      // console.log(deletedSourceItemsIds);
-      // for (let key in state.entities)
-      //   if (state.entities[key].title === item.resourceName) {
-      //     state.entities[key].resource_items.push({
-      //       id: Math.random().toString(),
-      //       link: item.link,
-      //       title: item.itemName,
-      //       createdAt: new Date().toISOString(),
-      //       description: item.description,
-      //     });
-      //     break;
-      //   }
+      const { item } = action.payload;
+      for (let key in state.entities)
+        if (state.entities[key].title === item.resourceName) {
+          state.entities[key].resource_items.push({
+            id: Math.random().toString(),
+            link: item.link,
+            title: item.itemName,
+            createdAt: new Date().toISOString(),
+            description: item.description,
+          });
+          break;
+        }
     },
   },
 });
