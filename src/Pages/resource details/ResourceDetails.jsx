@@ -71,7 +71,9 @@ export function ResourceDetails() {
         setResourceItems(response.resource_items);
         setCurrentResourceItems(response.resource_items);
         dispatch(setResourcesDetails({ entity: response }));
+        showSuccess("Resource detials fetched successfully");
       } catch (error) {
+        showError(error.message);
       } finally {
         dispatch(
           changeResourcesDetailsStatus({
