@@ -28,9 +28,10 @@ export const resourcesDetailsSlice = createSlice({
       state.entities[id].resource_items = updatedResourceItems;
     },
     addNewItemToResourceDetails(state, action) {
-      const { id, deletedSourceItemsIds } = action.payload;
-      console.log(id);
-      console.log(deletedSourceItemsIds);
+      console.log(action.payload)
+      // const { id, deletedSourceItemsIds } = action.payload;
+      // console.log(id);
+      // console.log(deletedSourceItemsIds);
       // for (let key in state.entities)
       //   if (state.entities[key].title === item.resourceName) {
       //     state.entities[key].resource_items.push({

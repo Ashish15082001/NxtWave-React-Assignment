@@ -170,7 +170,8 @@ export function ResourceDetails() {
 
   async function onUpdateResourceItems() {
     try {
-      if (deletedResourceItemsIds.length === 0) return;
+      if (deletedResourceItemsIds.length === 0)
+        return showWarning("you have not made any chages to resource item.");
       await updateItem();
       dispatch(
         updateResourceDetails({
@@ -200,6 +201,19 @@ export function ResourceDetails() {
 
   function showError(message) {
     toast.error(message, {
+      position: "bottom-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+
+  function showWarning(message) {
+    toast.warn(message, {
       position: "bottom-center",
       autoClose: 3000,
       hideProgressBar: false,
