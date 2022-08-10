@@ -42,13 +42,19 @@ export function ResourceDetails() {
   const [resourceItems, setResourceItems] = useState(
     resourceDetails?.resource_items ? resourceDetails.resource_items : []
   );
-  const currentPageresourceItemsSlice = useMemo(() => {
+  const [currentResourceItems, setCurrentResourceItems] =
+    useState(resourceItems);
+
+  const currentPageResourceItems = useMemo(() => {
     const startingIndex = (currentPageNumber - 1) * 6;
-    return resourceItems.slice(startingIndex, startingIndex + PAGE_LENGTH);
-  }, [currentPageNumber, resourceItems]);
+    return currentResourceItems.slice(
+      startingIndex,
+      startingIndex + PAGE_LENGTH
+    );
+  }, [currentPageNumber, currentResourceItems]);
   const numberOfPages = useMemo(
-    () => Math.ceil(resourceItems.length / PAGE_LENGTH),
-    [resourceItems]
+    () => Math.ceil(currentResourceItems.length / PAGE_LENGTH),
+    [currentResourceItems]
   );
 
   const getResourceDetails = useCallback(
@@ -63,6 +69,7 @@ export function ResourceDetails() {
           resource_id: params.resource_id,
         });
         setResourceItems(response.resource_items);
+        setCurrentResourceItems(response.resource_items);
         dispatch(setResourcesDetails({ entity: response }));
       } catch (error) {
       } finally {
@@ -110,12 +117,12 @@ export function ResourceDetails() {
     const searchValue = event.target.value.trimStart();
     const newResourceItems =
       searchValue === ""
-        ? resourceDetails.resource_items
-        : resourceDetails.resource_items.filter(
+        ? resourceItems
+        : resourceItems.filter(
             (resourceItem) => resourceItem.title === searchValue
           );
 
-    setResourceItems(newResourceItems);
+    setCurrentResourceItems(newResourceItems);
     setSearchInputValueChange(searchValue);
     setCurrentPageNumber(1);
   }
@@ -129,6 +136,12 @@ export function ResourceDetails() {
           (selectedResourceItemId) => selectedResourceItemId === resourceItem.id
         )
     );
+    const updatedCurrentResourceItems = currentResourceItems.filter(
+      (resourceItem) =>
+        !selectedResourceItemsIds.some(
+          (selectedResourceItemId) => selectedResourceItemId === resourceItem.id
+        )
+    );
 
     setDeletedResourceItemsIds((oldDeletedResourceItemsIds) => [
       ...oldDeletedResourceItemsIds,
@@ -136,6 +149,7 @@ export function ResourceDetails() {
     ]);
     setSelectedResourceItemsIds([]);
     setResourceItems(updatedResourceItems);
+    setCurrentResourceItems(updatedCurrentResourceItems);
   }
 
   function sortInAscending() {
@@ -231,7 +245,7 @@ export function ResourceDetails() {
             id={resourceDetails.id}
             link={resourceDetails.link}
             title={resourceDetails.title}
-            resource_items_length={resourceItems.length}
+            resource_items_length={currentResourceItems.length}
           />
           <Button
             text={"UPDATE"}
@@ -246,7 +260,7 @@ export function ResourceDetails() {
             sortByDate={sortByDate}
           />
           <ItemsTable
-            resource_items={currentPageresourceItemsSlice}
+            resource_items={currentPageResourceItems}
             onResourceItemSeleted={onResourceItemSeleted}
           />
           <TableShoe>
