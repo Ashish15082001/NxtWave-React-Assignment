@@ -29,7 +29,8 @@ export const resourcesDetailsSlice = createSlice({
     },
     addNewItemToResourceDetails(state, action) {
       const { item } = action.payload;
-      for (let key in state.entities)
+
+      for (let key in state.entities) {
         if (state.entities[key].title === item.resourceName) {
           state.entities[key].resource_items.push({
             id: Math.random().toString(),
@@ -40,6 +41,7 @@ export const resourcesDetailsSlice = createSlice({
           });
           break;
         }
+      }
     },
   },
 });
